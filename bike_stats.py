@@ -1,5 +1,5 @@
 
-from helper_functions import load_data, get_filters, station_stats, trip_duration_stats, user_stats
+from helper_functions import load_data, get_filters, station_stats, trip_duration_stats, user_stats, time_stats
 
 import time
 import pandas as pd
@@ -17,6 +17,6 @@ print(load_data('chicago', 'january', 'monday').info())
 #    most common trip from start to end (i.e., most frequent combination of start station and end station)
 #station_stats(df)
 #trip_duration_stats(df)
-#user_stats(df)
-user_stats(load_data('chicago', 'january', 'monday'))
+#user_stats(df, city)
+time_stats(load_data('chicago', 'january', 'monday'))
 

@@ -147,7 +147,7 @@ def trip_duration_stats(df):
     print('-'*40) 
     
 
-def user_stats(df):
+def user_stats(df, city):
     """Displays statistics on bikeshare users."""
     print('-'*40)
     print('\nCalculating User Stats...\n')
@@ -156,14 +156,34 @@ def user_stats(df):
 
     # Display counts of user types
     count_types = df['User Type'].value_counts()
-
-    # Display counts of gender
-    count_gender = df['Gender'].value_counts()
-
-    # Display earliest, most recent, and most common year of birth
     print('User Types:\n{}\n'.format(count_types.to_string()))
-    print('Gender stats:\n{}\n'.format(count_gender.to_string()))
-    print('Birthyear stats:\nEarliest: {}\nMost Recent: {}\nMost Common Year of Birth: {}\n'.format(int(df['Birth Year'].min()), int(df['Birth Year'].max()), int(df['Birth Year'].mode())))
+    
+    if city != 'washington':
+        # Display counts of gender
+        count_gender = df['Gender'].value_counts()
+
+        # Display earliest, most recent, and most common year of birth
+        print('Gender stats:\n{}\n'.format(count_gender.to_string()))
+        print('Birthyear stats:\nEarliest: {}\nMost Recent: {}\nMost Common Year of Birth: {}\n'.format(int(df['Birth Year'].min()), int(df['Birth Year'].max()), int(df['Birth Year'].mode())))
+
+    print("\nThis took %s seconds." % (time.time() - start_time))
+    print('-'*40)
+
+def time_stats(df):
+    """Displays statistics on the most frequent times of travel."""
+    print('-'*40)
+    print('\nCalculating The Most Frequent Times of Travel...\n')
+    print('-'*40)
+    start_time = time.time()
+
+    # TO DO: display the most common month
+
+
+    # TO DO: display the most common day of week
+
+
+    # TO DO: display the most common start hour
+
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
