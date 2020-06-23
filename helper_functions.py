@@ -139,11 +139,33 @@ def trip_duration_stats(df):
     df['travel time'].astype('timedelta64[m]')
 
     # display total travel time
-    print('Total travel time: {}  in [m]'.format(df['travel time'].astype('timedelta64[m]').sum()))
+    print('Total travel time: {}  in [m]'.format(df['travel time'].astype('timedelta64[m]').sum().to_string()))
     # display mean travel time
-    print('Mean travel time: {}  in [m]'.format(df['travel time'].astype('timedelta64[m]').mean()))
+    print('Mean travel time: {}  in [m]'.format(df['travel time'].astype('timedelta64[m]').mean().to_string()))
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40) 
+    
+
+def user_stats(df):
+    """Displays statistics on bikeshare users."""
+    print('-'*40)
+    print('\nCalculating User Stats...\n')
+    print('-'*40)
+    start_time = time.time()
+
+    # Display counts of user types
+    count_types = df['User Type'].value_counts()
+
+    # Display counts of gender
+    count_gender = df['Gender'].value_counts()
+
+    # Display earliest, most recent, and most common year of birth
+    print('User Types:\n{}\n'.format(count_types.to_string()))
+    print('Gender stats:\n{}\n'.format(count_gender.to_string()))
+    print('Birthyear stats:\nEarliest: {}\nMost Recent: {}\nMost Common Year of Birth: {}\n'.format(int(df['Birth Year'].min()), int(df['Birth Year'].max()), int(df['Birth Year'].mode())))
+
+    print("\nThis took %s seconds." % (time.time() - start_time))
+    print('-'*40)
 
 
