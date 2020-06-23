@@ -73,6 +73,7 @@ def load_data(city, month, day):
 
     # convert the Start Time column to datetime
     df['Start Time'] =  pd.to_datetime(df['Start Time'])
+    df['End Time'] =  pd.to_datetime(df['End Time'])
 
     # extract month and day of week from Start Time to create new columns
     df['month'] = df['Start Time'].dt.month
@@ -134,11 +135,13 @@ def trip_duration_stats(df):
      
     start_time = time.time()
 
-    # TO DO: display total travel time
+    df['travel time'] = df['End Time'] - df['Start Time']
+    df['travel time'].astype('timedelta64[m]')
 
-
-    # TO DO: display mean travel time
-
+    # display total travel time
+    print('Total travel time: {}  in [m]'.format(df['travel time'].astype('timedelta64[m]').sum()))
+    # display mean travel time
+    print('Mean travel time: {}  in [m]'.format(df['travel time'].astype('timedelta64[m]').mean()))
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40) 

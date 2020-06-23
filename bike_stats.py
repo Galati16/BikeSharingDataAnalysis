@@ -15,6 +15,6 @@ import pandas as pd
 #calculate stats for stations:
 #    most common start and  end station
 #    most common trip from start to end (i.e., most frequent combination of start station and end station)
-station_stats(load_data('chicago', 'january', 'monday'))
+#station_stats(df)
 trip_duration_stats(load_data('chicago', 'january', 'monday'))
 
