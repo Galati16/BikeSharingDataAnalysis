@@ -5,6 +5,8 @@ import numpy as np
 CITY_DATA = { 'chicago': 'chicago.csv',
               'new york city': 'new_york_city.csv',
               'washington': 'washington.csv' }
+weekDays = ('all', 'monday', 'tuesday', 'wednesday','thursday', 'friday', 'saturday', 'sunday')
+months = ['all', 'january', 'february', 'march', 'april', 'may', 'june']
 
 def get_filters():
     """
@@ -16,6 +18,9 @@ def get_filters():
         (str) day - name of the day of week to filter by, or "all" to apply no day filter
     """
     response = 'N'
+
+    month=''
+    
     print('Hello! Let\'s explore some US bikeshare data!\n')
 
     while response == 'N' or response == 'n':
@@ -28,23 +33,21 @@ def get_filters():
         print('Analaysing data for {}!\n'.format(city))
 
         # get user input for month (all, january, february, ... , june)
-        month = ['all', 'january', 'february', 'march', 'april', 'may', 'june']
         month = input(
         'Which time periode would you like to analyze: (all, january, february, ... , june)?\n').lower().strip()
-        while month not in month:
+        while month not in months:
             month = input(
-            'Sorry that was not right! Choose chicago, new york city or washington:\n')
+            'Sorry that was not right! Choose all, january, february, ... , june:\n')
         print('Choosen time periode: {}!\n'.format(month))
 
         # get user input for day of week (all, monday, tuesday, ... sunday)
-        weekDays = ('all', 'monday', 'tuesday', 'wednesday',
-                'thursday', 'friday', 'saturday', 'sunday')
+
         day = input(
         'Which day would you like to analyse: (all, monday, tuesday, ... sunday)?\n').lower().strip()
         while day not in weekDays:
             day = input(
             'Sorry that was not right! Choose: all, monday, tuesday, ... sunday\n')
-        print('Choosen time periode: {}!'.format(month))
+        print('Choosen time periode: {}!'.format(weekDays))
         print('-'*40+'\n')
         
         # make sure input is right:
@@ -67,6 +70,7 @@ def load_data(city, month, day):
     Returns:
         df - pandas DataFrame containing city data filtered by month and day
     """
+    months = ['january', 'february', 'march', 'april', 'may', 'june']
     
     # load data file into a dataframe
     df = pd.read_csv(CITY_DATA[city])
@@ -78,12 +82,23 @@ def load_data(city, month, day):
     # extract month and day of week from Start Time to create new columns
     df['month'] = df['Start Time'].dt.month
     df['day_of_week'] = df['Start Time'].dt.day_name()
+    df['hour'] = df['Start Time'].dt.hour
+    
+    
 
-
+    #Stats of unfiltered data: 
+    print('-'*40) 
+    print('Bikes in {} were most commonly used in {}, on {}s and at {} o\'clock'.format(
+                city.title(), months[df['month'].mode()[0]-1].title(),  df['day_of_week'].mode()[0], df['hour'].mode()[0]))
+    print(df['month'].value_counts())
+    print(df['day_of_week'].value_counts())
+    print(df['hour'].value_counts())
+    print('-'*40) 
+    
     # filter by month if applicable
     if month != 'all':
         # use the index of the months list to get the corresponding int
-        months = ['january', 'february', 'march', 'april', 'may', 'june']
+
         month = months.index(month)+1
     
         # filter by month to create the new dataframe
@@ -115,10 +130,10 @@ def station_stats(df):
     end_station = df['End Station'].mode()[0]
 
     # display most frequent combination of start station and end station trip
-    combination = df['Start Station']+' '+ df['End Station']
+    combination = df['Start Station']+' TO '+ df['End Station']
     print('The most commonly used start station: {}\n'.format(start_station))
     print('The most commonly used end station: {}\n'.format(end_station))
-    print('The most frequent combination of start station and end station:\n {}\n'.format(combination.mode()))
+    print('The most frequent combination of start station and end station:\n {}\n'.format(combination.mode()[0]))
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)   
@@ -139,9 +154,9 @@ def trip_duration_stats(df):
     df['travel time'].astype('timedelta64[m]')
 
     # display total travel time
-    print('Total travel time: {}  in [m]'.format(df['travel time'].astype('timedelta64[m]').sum().to_string()))
+    print('Total travel time: {}  in [m]'.format(df['travel time'].astype('timedelta64[m]').sum()))
     # display mean travel time
-    print('Mean travel time: {}  in [m]'.format(df['travel time'].astype('timedelta64[m]').mean().to_string()))
+    print('Mean travel time: {}  in [m]'.format(df['travel time'].astype('timedelta64[m]').mean(), '.2f'))
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40) 
@@ -168,24 +183,4 @@ def user_stats(df, city):
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
-
-def time_stats(df):
-    """Displays statistics on the most frequent times of travel."""
-    print('-'*40)
-    print('\nCalculating The Most Frequent Times of Travel...\n')
-    print('-'*40)
-    start_time = time.time()
-
-    # TO DO: display the most common month
-
-
-    # TO DO: display the most common day of week
-
-
-    # TO DO: display the most common start hour
-
-
-    print("\nThis took %s seconds." % (time.time() - start_time))
-    print('-'*40)
-
 
