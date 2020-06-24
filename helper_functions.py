@@ -90,9 +90,9 @@ def load_data(city, month, day):
     print('-'*40) 
     print('Bikes in {} were most commonly used in {}, on {}s and at {} o\'clock'.format(
                 city.title(), months[df['month'].mode()[0]-1].title(),  df['day_of_week'].mode()[0], df['hour'].mode()[0]))
-    print(df['month'].value_counts())
-    print(df['day_of_week'].value_counts())
-    print(df['hour'].value_counts())
+    #print(df['month'].value_counts())
+    #print(df['day_of_week'].value_counts())
+    #print(df['hour'].value_counts())
     print('-'*40) 
     
     # filter by month if applicable
