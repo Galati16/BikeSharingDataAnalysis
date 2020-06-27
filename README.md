@@ -21,6 +21,11 @@ most commonly used in Month, weekday, hour of the day
      * gender statistics (not available for Washington)
      * age statistics (not available for Washington)
 
+## Dependencies:  
+Following pyhton libraries are needed:
+* numpy
+* pandas
+* time
 
 ## Author
 Katharina Kern 
