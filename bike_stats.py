@@ -21,7 +21,7 @@ while True:
     #calculate user stats, if available:
     user_stats(df, city)
     
-    
+    # handle raw data input interactivley depending on user input
     user_input = input('Would you like to see the raw data? (Y/N).y\n If you would like to restart, write: restart.\n')
     if user_input.lower() == 'n' or user_input.lower() == 'no' :
         break
